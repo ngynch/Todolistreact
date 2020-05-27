@@ -6,27 +6,20 @@ import AddToDo from './components/AddToDo';
 import About from './components/pages/About';
 import './App.css';
 import {v4 as uuid} from 'uuid';
+import axios from 'axios';
 
 class App extends React.Component {
   state = {
     todos: [
-      {
-        id: uuid(),
-        title: 'Essen',
-        completed: false
-      },
-      {
-        id: uuid(),
-        title: 'Trinken',
-        completed: true
-      },
-      {
-        id: uuid(),
-        title: 'Schlafen',
-        completed: false
-      }
+
     ]
   }
+
+  componentDidMount() {
+    axios.get('https:jsonplaceholder.typicode.com/todos?_limit=10')
+      .then(res => this.setState({ todos: res.data}))
+  }
+
   // Toggle Complete
   markComplete = (id) => { 
     this.setState({
